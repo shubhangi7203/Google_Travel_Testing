@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite">
-  <test thread-count="5" name="Test">
-    <classes>
-     
-      <class name="com.qa.testscript.Launch_Browser"/>
-    </classes>
+
+  <parameter name="Browser" value="Chrome"/>
+    <parameter name="Url" value="https://www.google.com/travel/"/>
+  
+  <test name="Travel Automation Test">
+        <classes>
+            <class name="com.qa.testscript.Launch_Browser"/>
+        </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
