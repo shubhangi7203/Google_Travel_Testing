@@ -56,7 +56,7 @@ public class TestBase {
         js = (JavascriptExecutor) driver;
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get(url); ा
+        driver.get(url);
     }
 
     @AfterClass
