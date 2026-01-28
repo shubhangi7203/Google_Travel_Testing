@@ -26,54 +26,44 @@ import org.testng.annotations.Parameters;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 
-public class TestBase 
-{
-	WebDriver driver;
-	
-	JavascriptExecutor js;
-	FileInputStream FileLoc;
-	Properties prop;
-	String Browser = "Chrome";
-	
-	@Parameters({"Browser","Url"})
-	@BeforeClass
-	public void SetUp () throws IOException {
-		//FileLoc = new FileInputStream("");
-		//prop=new Properties();
-		//prop.load(FileLoc);
-		
-		if(Browser.equalsIgnoreCase("Chrome")) {
-			// Chrome Browser
-			WebDriverManager.chromedriver().setup();
-			driver = new ChromeDriver();
-		}else if(Browser.equalsIgnoreCase("Edge")) {
-			// Edge Browser
-			WebDriverManager.edgedriver().setup();
-			driver = new EdgeDriver();
-		}
-		
-//		CitiBankPages CitiBankOR= CitiBankPage(driver);
-		
-		js = (JavascriptExecutor) driver;
-		driver.manage().window().maximize();
-			//driver.get(Browser);
-	}	
-	
-	
-	@AfterClass
-	public void tearDown() 
-	{
-		//driver.quit();
-		driver.close();
-	}
-	
-	
-	public void captureScreenShot(WebDriver driver,String tName) throws IOException {
-	 TakesScreenshot ts = (TakesScreenshot)driver;
-	 File src =ts.getScreenshotAs(OutputType.FILE);
-		File target = new File(System.getProperty("user.dir")+"/ScreenShots/"+tName+".png");
-		FileUtils.copyFile(src, target);
-	}
-	
+public class TestBase {
+    WebDriver driver;
+    JavascriptExecutor js;
+    
+    @Parameters({"Browser", "Url"}) 
+    @BeforeClass
+    public void SetUp(String browserName, String url) throws IOException {
+        
+        if (browserName.equalsIgnoreCase("Chrome")) {
+            WebDriverManager.chromedriver().setup();
+            
+           
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless=new");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--window-size=1920,1080");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            
+            driver = new ChromeDriver(options);
+        } else if (browserName.equalsIgnoreCase("Edge")) {
+            WebDriverManager.edgedriver().setup();
+            EdgeOptions options = new EdgeOptions();
+            options.addArguments("--headless");
+            driver = new EdgeDriver(options);
+        }
+        
+        js = (JavascriptExecutor) driver;
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.get(url); ा
+    }
 
+    @AfterClass
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit(); 
+        }
+    }
+    
 }
