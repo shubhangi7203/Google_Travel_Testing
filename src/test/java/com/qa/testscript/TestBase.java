@@ -33,7 +33,7 @@ public class TestBase {
     
     @Parameters({"Browser", "Url"}) 
     @BeforeClass
-    public void SetUp(String browserName, String url) throws IOException {
+   public void SetUp(@Optional("Chrome") String browserName, @Optional("https://www.google.com/travel/") String url) throws IOException {
         
         if (browserName.equalsIgnoreCase("Chrome")) {
             WebDriverManager.chromedriver().setup();
