@@ -62,8 +62,8 @@ public class TestBase {
     @AfterClass
     public void tearDown() {
         if (driver != null) {
-            driver.quit(); 
+            driver.quit();
         }
     }
-    
+
 }
